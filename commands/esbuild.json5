@@ -1,0 +1,130 @@
+{
+
+  // 基本配置
+  "entryPoints": ["src/main.ts", "src/admin.ts"],
+  "outfile": "dist/bundle.js",
+  "outdir": "dist",
+  "outbase": "src",
+  "platform": "browser",
+  "format": "esm",
+  "target": "es2020",
+  "charset": "utf8",
+  "treeShaking": true,
+  "ignoreAnnotations": false,
+
+  // 打包相关
+  "bundle": true,
+  "splitting": false,
+  "preserveSymlinks": false,
+  "external": ["react", "react-dom"],
+  "packages": "external",
+  "alias": {
+    "@components": "src/components"
+  },
+  "mainFields": ["module", "main"],
+  "conditions": ["import", "require"],
+  "resolveExtensions": [".ts", ".tsx", ".js", ".jsx"],
+  "tsconfig": "tsconfig.json",
+  "publicPath": "/assets/",
+  "inject": ["src/polyfills.ts"],
+  "loader": {
+    ".svg": "dataurl",
+    ".png": "file"
+  },
+
+  // 优化相关
+  "minify": false,
+  "minifyWhitespace": true,
+  "minifyIdentifiers": true,
+  "minifySyntax": true,
+  "lineLimit": 80,
+  "drop": ["console", "debugger"],
+  "dropLabels": ["unused"],
+  "mangleProps": "^_",
+  "reserveProps": ["^__.*__$"],
+  "mangleQuoted": false,
+  "legalComments": "none",
+
+  // JSX 相关
+  "jsx": "automatic",
+  "jsxFactory": "React.createElement",
+  "jsxFragment": "React.Fragment",
+  "jsxImportSource": "react",
+  "jsxDev": false,
+  "jsxSideEffects": true,
+
+  // 输出相关
+  "write": true,
+  "allowOverwrite": true,
+  "metafile": true,
+  "sourcemap": "linked",
+  "sourceRoot": "src",
+  "sourcesContent": true,
+  "outExtension": {
+    ".js": ".min.js",
+    ".css": ".min.css"
+  },
+  "entryNames": "[dir]/[name]-[hash]",
+  "chunkNames": "[name]-[hash]",
+  "assetNames": "[name]-[hash]",
+  "banner": {
+    "js": "// Banner for JS files",
+    "css": "/* Banner for CSS files */"
+  },
+  "footer": {
+    "js": "// Footer for JS files"
+  },
+
+  // 全局定义
+  "define": {
+    "process.env.NODE_ENV": "\"production\"",
+    "DEBUG": "false"
+  },
+
+  // 纯函数标记
+  "pure": ["console.log", "alert"],
+
+  // 日志相关
+  "color": true,
+  "logLevel": "warning",
+  "logLimit": 10,
+  "logOverride": {
+    "unsupported-jsx-syntax": "silent"
+  },
+
+  // Node.js 相关
+  "nodePaths": ["node_modules"],
+  "absWorkingDir": "/project",
+  "absPaths": true,
+
+  // Watch 模式
+  "watch": true,
+  "watchOptions": {
+    "onRebuild": null,
+    "delay": 100
+  },
+
+  // 标准输入/输出
+  "stdin": {
+    "contents": "",
+    "resolveDir": ".",
+    "sourcefile": "stdin.js",
+    "loader": "ts"
+  },
+
+  // 其他
+  "supported": {
+    "dynamic-import": true,
+    "bigint": true
+  },
+  "engines": [
+    {
+      "browser": "> 0.25%"
+    },
+    {
+      "node": "12"
+    }
+  ],
+  "keepNames": false,
+  "globalName": "MyApp"
+}
