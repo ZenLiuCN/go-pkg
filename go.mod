@@ -1,4 +1,4 @@
-module github.com/ZenLiuCN/go-npx
+module github.com/ZenLiuCN/go-pkg
 
 go 1.24
 

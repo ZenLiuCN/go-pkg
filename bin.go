@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/ZenLiuCN/go-npx/commands"
+	"github.com/ZenLiuCN/go-pkg/commands"
 	"os"
 	"os/signal"
 	"syscall"
