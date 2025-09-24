@@ -212,6 +212,11 @@ func esbuild() *cli.Command {
 				Name:  "metafile",
 				Usage: "generate metafile",
 			},
+			&cli.StringFlag{
+				Name:    "treeShaking",
+				Aliases: []string{"ts"},
+				Usage:   "enable Tree Shaking: true or false",
+			},
 			&cli.StringSliceFlag{
 				Name:  "define",
 				Usage: "define global constants",
@@ -309,6 +314,9 @@ func esbuild() *cli.Command {
 			if cmd.IsSet("metafile") {
 				config.Metafile = cmd.Bool("metafile")
 			}
+			if cmd.IsSet("treeShaking") {
+				config.TreeShaking = cmd.String("treeShaking")
+			}
 			if defines := cmd.StringSlice("define"); len(defines) > 0 {
 				config.Define = make(map[string]string)
 				for _, d := range defines {
@@ -337,7 +345,12 @@ func esbuild() *cli.Command {
 			if config.Outfile == "" && config.Outdir == "" {
 				return fmt.Errorf("either outfile or outdir must be specified")
 			}
-
+			var ts = api.TreeShakingDefault
+			if config.TreeShaking == "" {
+				ts = api.TreeShakingDefault
+			} else if strings.EqualFold(config.TreeShaking, "true") {
+				ts = api.TreeShakingTrue
+			}
 			// 构建 esbuild 选项
 			buildOptions := api.BuildOptions{
 				EntryPoints:       config.EntryPoints,
@@ -358,6 +371,7 @@ func esbuild() *cli.Command {
 				JSXFragment:       config.JSXFragment,
 				JSXImportSource:   config.JSXImportSource,
 				JSXDev:            config.JSXDev,
+				TreeShaking:       ts,
 				External:          config.External,
 				Define:            config.Define,
 				Sourcemap:         parseSourceMap(config.Sourcemap),
